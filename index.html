@@ -6,10 +6,24 @@
 
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no"
   >
 
   <title>Saisie Journalière</title>
+
+
+  <!-- PWA standard (Android / Chrome) -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2563eb">
+
+
+  <!-- Spécifique iOS : c'est ce qui permet un vrai lancement
+       plein écran depuis l'écran d'accueil sur iPhone. -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Saisie">
+  <link rel="apple-touch-icon" href="icon-192.png">
+
 
   <style>
 
@@ -25,6 +39,8 @@
       padding: 0;
 
       width: 100%;
+
+      height: 100%;
 
       overflow-x: hidden;
 
@@ -93,6 +109,26 @@
       }
 
     });
+
+
+    // Enregistrement du service worker : condition nécessaire
+    // pour que le navigateur propose "Ajouter à l'écran
+    // d'accueil" comme une vraie appli installable.
+    if ("serviceWorker" in navigator) {
+
+      window.addEventListener("load", function() {
+
+        navigator.serviceWorker
+          .register("sw.js")
+          .catch(function(erreur) {
+
+            console.error(
+              "Échec de l'enregistrement du service worker :",
+              erreur
+            );
+          });
+      });
+    }
 
   </script>
 
