@@ -31,6 +31,12 @@
       box-sizing: border-box;
     }
 
+    /*
+     * La page GitHub ne défile JAMAIS : elle fait exactement la
+     * taille de l'écran. C'est l'application, à l'intérieur du
+     * cadre, qui gère son propre défilement (une seule barre).
+     */
+
     html,
     body {
 
@@ -42,11 +48,18 @@
 
       height: 100%;
 
-      overflow-x: hidden;
+      overflow: hidden;
 
       background: #f1f5f9;
     }
 
+
+    /*
+     * Le cadre occupe tout l'écran.
+     * 100vh = secours pour les anciens navigateurs,
+     * 100dvh = hauteur réelle visible (barre d'adresse mobile
+     * prise en compte).
+     */
 
     #cadre-app {
 
@@ -54,13 +67,11 @@
 
       width: 100%;
 
+      height: 100vh;
+
+      height: 100dvh;
+
       border: none;
-
-      /* Hauteur de secours affichée un court instant avant
-         réception du premier message de l'appli. */
-      height: 900px;
-
-      transition: height 0.15s ease;
     }
 
   </style>
@@ -85,31 +96,6 @@
 
 
   <script>
-
-    var cadre =
-      document.getElementById("cadre-app");
-
-
-    window.addEventListener("message", function(event) {
-
-      var donnees =
-        event.data;
-
-
-      if (
-        donnees &&
-        donnees.type === "app-hauteur" &&
-        typeof donnees.hauteur === "number" &&
-        donnees.hauteur > 0
-      ) {
-
-        // Petite marge de sécurité pour éviter toute coupure.
-        cadre.style.height =
-          (donnees.hauteur + 20) + "px";
-      }
-
-    });
-
 
     // Enregistrement du service worker : condition nécessaire
     // pour que le navigateur propose "Ajouter à l'écran
