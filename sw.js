@@ -9,7 +9,7 @@
  * façon une connexion internet pour lire/écrire le Google Sheet.
  */
 
-var NOM_CACHE = "saisie-journaliere-v1";
+var NOM_CACHE = "saisie-journaliere-v2";
 
 var FICHIERS_A_METTRE_EN_CACHE = [
   "./index.html",
